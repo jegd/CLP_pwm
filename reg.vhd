@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity reg is
 	generic(
-		N: natural := 4
+		N: natural := 32
 	);
 
 	port(

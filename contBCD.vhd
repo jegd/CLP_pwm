@@ -7,7 +7,8 @@ entity contBCD is
 		clk_i: in std_logic;
 		rst_i: in std_logic;
 		ena_i: in std_logic;
-		cuenta_o: out std_logic_vector(3 downto 0);
+		num_maxi: in std_logic_vector(31 downto 0);
+		cuenta_o: out std_logic_vector(31 downto 0);
 		max_o: out std_logic
 	);
 end;	
@@ -16,7 +17,7 @@ architecture contBCD_arq of contBCD is
 -- Parte declarativa
 component reg is
 	generic(
-		N: natural := 4
+		N: natural := 32
 	);
 
 	port(
@@ -28,19 +29,20 @@ component reg is
 	);
 end component;
 
-	signal salReg, salSum: std_logic_vector(3 downto 0);
 	signal salAnd, salOr, salComp: std_logic;
+	signal salReg, copiaReg,salSum : std_logic_vector(31 downto 0);
 
 begin
 -- Parte descriptiva
 	salOr <= rst_i or salAnd;
 	salAnd <= ena_i and salComp;
 	salSum <= std_logic_vector(unsigned(salReg) + "0001");
-	salComp <= salReg(3) and not salReg(2) and not salReg(1) and salReg(0);
+	copiaReg <= salReg;
+
 	max_o <= salComp;
 	reg_inst: reg
 	generic map(
-	N => 4
+	N => 32
 	)
 	port map(
 		clk_i => clk_i,
@@ -51,4 +53,15 @@ begin
 	);
 
 	cuenta_o <= salReg;
+
+	process(clk_i)
+	begin
+	if rising_edge(clk_i) then
+		if to_integer(unsigned(salReg)) = to_integer(unsigned(num_maxi)) then
+			salComp <= '1';
+		else
+			salComp <= '0';
+		end if ;
+	end if ;
+	end process;
 end;
