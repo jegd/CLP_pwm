@@ -32,8 +32,8 @@ begin
 clk_tb <= not clk_tb after 4 ns;
 rst_tb <= '0' after 30 ns;
 ena_tb <= '0' after 20 ns, '1' after 30 ns;
-freq_tb<= std_logic_vector(to_unsigned(20,32));
-duty_tb<= std_logic_vector(to_unsigned(50,32));
+freq_tb<= std_logic_vector(to_unsigned(10000000,32));
+duty_tb<= std_logic_vector(to_unsigned(10,32));
 
 	DUT: pwm_mmc
 			generic map(
