@@ -57,7 +57,7 @@ begin
 	process(clk_i)
 	begin
 	if rising_edge(clk_i) then
-		if to_integer(unsigned(salReg)) = to_integer(unsigned(num_maxi)) then
+		if to_integer(unsigned(salReg)) = (to_integer(unsigned(num_maxi))-2) then
 			salComp <= '1';
 		else
 			salComp <= '0';
