@@ -12,7 +12,6 @@ entity pwm is
 		ena_i: in std_logic;
 	 	freq_i: in std_logic_vector(N-1 downto 0);
 		duty_i: in std_logic_vector(N-1 downto 0);
-		cuenta_o: out std_logic_vector(N-1 downto 0);
 		pwm_o: out std_logic
 	);
 end;
@@ -52,7 +51,6 @@ contBCD_inst: contBCD
 			cuenta_o  => salBCD,
 			max_o   => maximo
 		);
-		cuenta_o<= salBCD;
 		process(clk_i)
 		begin
 		if rising_edge(clk_i) then

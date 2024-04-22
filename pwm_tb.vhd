@@ -17,7 +17,6 @@ architecture pwm_tb_arq of pwm_tb is
 			ena_i: in std_logic;
 			freq_i: in std_logic_vector(N-1 downto 0);
 			duty_i: in std_logic_vector(N-1 downto 0);
-			cuenta_o: out std_logic_vector(N-1 downto 0);
 			pwm_o: out std_logic
 		);
 	   end component;
@@ -25,7 +24,7 @@ architecture pwm_tb_arq of pwm_tb is
 	signal rst_tb: std_logic := '1';
 	signal ena_tb: std_logic := '1';
 	signal freq_tb: std_logic_vector(31 downto 0);
-	signal cuenta_tb, duty_tb :std_logic_vector(31 downto 0);
+	signal duty_tb :std_logic_vector(31 downto 0);
 	signal pwm_tb: std_logic:= '0';
 	
 begin
@@ -33,7 +32,7 @@ begin
 clk_tb <= not clk_tb after 10 ns;
 rst_tb <= '0' after 30 ns;
 ena_tb <= '0' after 20 ns, '1' after 30 ns;
-freq_tb<= std_logic_vector(to_unsigned(40,32));
+freq_tb<= std_logic_vector(to_unsigned(20,32));
 duty_tb<= std_logic_vector(to_unsigned(90,32));
 
 	DUT: pwm
@@ -46,7 +45,6 @@ duty_tb<= std_logic_vector(to_unsigned(90,32));
 			ena_i => ena_tb,
 			freq_i => freq_tb,
 			duty_i => duty_tb,
-			cuenta_o =>cuenta_tb,
 			pwm_o => pwm_tb
 		  );
 end;
