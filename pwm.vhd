@@ -1,4 +1,4 @@
-	library IEEE;
+library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
@@ -32,13 +32,15 @@ component contBCD is
 	);
 end component;	
 signal n_ciclos_on :integer := 10;
-signal salBCD : std_logic_vector(31 downto 0);
+signal salBCD,n_ciclos,aux1 : std_logic_vector(31 downto 0);
 signal maximo : std_logic;
 --variable count_i: integer range 0 to 16 := 5;
 begin
 	
+	
 -- Parte descriptiva
-n_ciclos_on<= (to_integer(unsigned(freq_i))*to_integer(unsigned(duty_i)))/100;
+n_ciclos<= std_logic_vector(to_unsigned(30,32));
+n_ciclos_on<= (to_integer(unsigned(n_ciclos))*to_integer(unsigned(duty_i)))/100;
 contBCD_inst: contBCD
 		generic map(
 			N=> 32
@@ -47,7 +49,7 @@ contBCD_inst: contBCD
 			clk_i => clk_i,
 			rst_i => rst_i,
 			ena_i => ena_i,
-			num_maxi => freq_i,
+			num_maxi => n_ciclos,
 			cuenta_o  => salBCD,
 			max_o   => maximo
 		);
