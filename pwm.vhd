@@ -30,14 +30,14 @@ component contBCD is
 		max_o: out std_logic
 	);
 end component;	
-constant multipli: natural := to_integer(unsigned(freq_i))*to_integer(unsigned(duty_i));
-constant n_ciclos_on :integer := 19;
+signal n_ciclos_on :integer := 10;
 signal salBCD : std_logic_vector(31 downto 0);
 signal maximo : std_logic;
 --variable count_i: integer range 0 to 16 := 5;
 begin
 	
 -- Parte descriptiva
+n_ciclos_on<= (to_integer(unsigned(freq_i))*to_integer(unsigned(duty_i)))/100;
 contBCD_inst: contBCD
 		port map(
 			clk_i => clk_i,
