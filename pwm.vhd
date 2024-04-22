@@ -4,16 +4,15 @@ use IEEE.numeric_std.all;
 
 entity pwm is
 	generic(
-		A: REAL := 0.5;
-		V: natural :=4
+		N: natural :=32
 	);
 	port(
 		clk_i: in std_logic;
 		rst_i: in std_logic;
 		ena_i: in std_logic;
-	 	freq_i: in std_logic_vector(31 downto 0);
-		duty_i: in std_logic_vector(31 downto 0);
-		cuenta_o: out std_logic_vector(31 downto 0);
+	 	freq_i: in std_logic_vector(N-1 downto 0);
+		duty_i: in std_logic_vector(N-1 downto 0);
+		cuenta_o: out std_logic_vector(N-1 downto 0);
 		pwm_o: out std_logic
 	);
 end;
@@ -21,6 +20,9 @@ end;
 architecture pwm_arq of pwm is 
 -- Parte declarativa
 component contBCD is
+	generic(
+		N: natural := 32
+	);
 	port(
 		clk_i: in std_logic;
 		rst_i: in std_logic;
@@ -39,6 +41,9 @@ begin
 -- Parte descriptiva
 n_ciclos_on<= (to_integer(unsigned(freq_i))*to_integer(unsigned(duty_i)))/100;
 contBCD_inst: contBCD
+		generic map(
+			N=> 32
+		)
 		port map(
 			clk_i => clk_i,
 			rst_i => rst_i,

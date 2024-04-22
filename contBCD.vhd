@@ -3,12 +3,15 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity contBCD is
+	generic(
+		N: natural := 32
+	);
 	port(
 		clk_i: in std_logic;
 		rst_i: in std_logic;
 		ena_i: in std_logic;
-		num_maxi: in std_logic_vector(31 downto 0);
-		cuenta_o: out std_logic_vector(31 downto 0);
+		num_maxi: in std_logic_vector(N-1 downto 0);
+		cuenta_o: out std_logic_vector(N-1 downto 0);
 		max_o: out std_logic
 	);
 end;	

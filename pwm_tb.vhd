@@ -9,16 +9,15 @@ architecture pwm_tb_arq of pwm_tb is
 -- Parte declarativa
       component pwm is
 		generic(
-			A: REAL := 0.5;
-			V: natural :=4
+			N: natural :=32
 		);
 		port(
 			clk_i: in std_logic;
 			rst_i: in std_logic;
 			ena_i: in std_logic;
-			freq_i: in std_logic_vector(31 downto 0);
-			duty_i: in std_logic_vector(31 downto 0);
-			cuenta_o: out std_logic_vector(31 downto 0);
+			freq_i: in std_logic_vector(N-1 downto 0);
+			duty_i: in std_logic_vector(N-1 downto 0);
+			cuenta_o: out std_logic_vector(N-1 downto 0);
 			pwm_o: out std_logic
 		);
 	   end component;
@@ -35,8 +34,12 @@ clk_tb <= not clk_tb after 10 ns;
 rst_tb <= '0' after 30 ns;
 ena_tb <= '0' after 20 ns, '1' after 30 ns;
 freq_tb<= std_logic_vector(to_unsigned(40,32));
-duty_tb<= std_logic_vector(to_unsigned(90,32));	
+duty_tb<= std_logic_vector(to_unsigned(90,32));
+
 	DUT: pwm
+			generic map(
+				N=>32
+			)
 		  port map(
 			clk_i => clk_tb,
 			rst_i => rst_tb,
